@@ -1,0 +1,147 @@
+import telebot
+from telebot import types
+import requests
+
+
+
+bot = telebot.TeleBot('5706432141:AAF3FazUgjQIPI8wVp8d2oK_O7_pm2v7W1Q')
+
+
+
+
+@bot.message_handler(commands = ['start'])
+def start(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard = True)
+    item_m = types.KeyboardButton('Moscow')
+    item_l = types.KeyboardButton('London')
+    item_s = types.KeyboardButton('Singapore')
+    item_a = types.KeyboardButton('Anchor')
+    item_b = types.KeyboardButton('Bangkok')
+    item_d = types.KeyboardButton('Jakarta')
+
+
+    markup.add(item_m, item_l, item_s, item_a, item_b, item_d)
+
+    mess = f'Добрый день, {message.from_user.first_name}, выбирайте город, погода в котором вам интересна'
+    bot.send_message(message.chat.id, mess, reply_markup = markup)
+
+
+
+@bot.message_handler(content_types=['text'])
+def bot_message(message):
+    if message.text == 'Moscow':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        responce = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q=Moscow&appid=4321a3d417b53045aa1b6617c529c910&units=metric&lang=ru")
+        weather = responce.json()['weather'][0]['description']
+        temp = responce.json()['main']['temp']
+        temp_feeling = responce.json()['main']['feels_like']
+
+
+        item_menu = types.KeyboardButton('Menu')
+
+        markup.add(item_menu)
+
+        bot.send_message(message.chat.id, f'Погода в Москве:\n{weather}, температура {temp}°C, ощущается как {temp_feeling}°C \nОдевайтесь теплее :)', reply_markup = markup)
+
+
+
+    elif message.text == 'London':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        responce = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q=London&appid=4321a3d417b53045aa1b6617c529c910&units=metric&lang=ru")
+        weather = responce.json()['weather'][0]['description']
+        temp = responce.json()['main']['temp']
+        temp_feeling = responce.json()['main']['feels_like']
+
+
+        item_menu = types.KeyboardButton('Menu')
+
+        markup.add(item_menu)
+
+        bot.send_message(message.chat.id, f'Погода в Лондоне:\n{weather}, температура {temp}°C, ощущается как {temp_feeling}°C \nНе забудьте шарф :) ', reply_markup = markup)
+
+
+
+    elif message.text == 'Singapore':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        responce = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q=Singapore&appid=4321a3d417b53045aa1b6617c529c910&units=metric&lang=ru")
+        weather = responce.json()['weather'][0]['description']
+        temp = responce.json()['main']['temp']
+        temp_feeling = responce.json()['main']['feels_like']
+
+
+        item_menu = types.KeyboardButton('Menu')
+
+        markup.add(item_menu)
+
+        bot.send_message(message.chat.id, f'Погода в Сингапуре:\n{weather}, температура {temp}°C, ощущается как {temp_feeling}°C \nНе прячьтесь под деревьями в грозу :)', reply_markup = markup)
+
+
+
+    elif message.text == 'Anchor':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        responce = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q=Anchor&appid=4321a3d417b53045aa1b6617c529c910&units=metric&lang=ru")
+        weather = responce.json()['weather'][0]['description']
+        temp = responce.json()['main']['temp']
+        temp_feeling = responce.json()['main']['feels_like']
+
+
+        item_menu = types.KeyboardButton('Menu')
+
+        markup.add(item_menu)
+
+        bot.send_message(message.chat.id, f'Погода в Ангоре:\n{weather}, температура {temp}°C, ощущается как {temp_feeling}°C \nНе забудьте шапку, не расстраивайте маму :)', reply_markup = markup)
+
+
+
+    elif message.text == 'Bangkok':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        responce = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q=Bangkok&appid=4321a3d417b53045aa1b6617c529c910&units=metric&lang=ru")
+        weather = responce.json()['weather'][0]['description']
+        temp = responce.json()['main']['temp']
+        temp_feeling = responce.json()['main']['feels_like']
+
+
+        item_menu = types.KeyboardButton('Menu')
+
+        markup.add(item_menu)
+
+        bot.send_message(message.chat.id, f'Погода в Бангкоке:\n{weather}, температура {temp}°C, ощущается как {temp_feeling}°C \nИдеальный день для прогулки :)' , reply_markup = markup)
+
+
+
+
+    elif message.text == 'Jakarta':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        responce = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q=Jakarta&appid=4321a3d417b53045aa1b6617c529c910&units=metric&lang=ru")
+        weather = responce.json()['weather'][0]['description']
+        temp = responce.json()['main']['temp']
+        temp_feeling = responce.json()['main']['feels_like']
+
+
+        item_menu = types.KeyboardButton('Menu')
+
+        markup.add(item_menu)
+
+        bot.send_message(message.chat.id, f'Погода в Джакарте:\n{weather}, температура {temp}°C, ощущается как {temp_feeling}°C \nИдеальный день для пикника :)', reply_markup = markup)
+
+
+
+
+
+#Вернуться в меню
+    elif message.text == 'Menu':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        item_m = types.KeyboardButton('Moscow')
+        item_l = types.KeyboardButton('London')
+        item_s = types.KeyboardButton('Singapore')
+        item_a = types.KeyboardButton('Anchor')
+        item_b = types.KeyboardButton('Bangkok')
+        item_d = types.KeyboardButton('Jakarta')
+
+        markup.add(item_m, item_l, item_s, item_a, item_b, item_d)
+
+        mess = f'Добрый день, {message.from_user.first_name}, выбирайте город, который вам еще интересен'
+        bot.send_message(message.chat.id, mess, reply_markup=markup)
+
+
+bot.polling(none_stop=True)
